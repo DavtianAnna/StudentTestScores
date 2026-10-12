@@ -1,78 +1,101 @@
-# 🎓 Predicting Student Test Scores - Kaggle Playground Series (S6E1)
+# 🎓 Predicting Student Test Scores — Kaggle Playground Series S6E1
 
-This repository contains my solution for the [Kaggle Playground Series - Predicting Student Test Scores](https://www.kaggle.com/competitions/playground-series-s6e1) competition.  
-The objective is to predict students' final exam scores based on various behavioral, academic, and environmental features — a regression task evaluated using **Root Mean Squared Error (RMSE)**.
+This repository contains my Machine Learning solution for the [Kaggle Playground Series — Predicting Student Test Scores](https://www.kaggle.com/competitions/playground-series-s6e1) competition.
 
----
+The goal is to predict students' final exam scores (`exam_score`) based on various academic, behavioral, and environmental features. This is a **regression task** evaluated using **Root Mean Squared Error (RMSE)**.
 
 ## 📁 Project Structure
 
 ```text
 project-root/
-├── 📄 Task.ipynb                # Main notebook: full ML pipeline from preprocessing to submission.
-├── 📊 train.csv                 # Training dataset (features + target exam_score)
-├── 🧪 test.csv                  # Test dataset (features without target)
-├── 📝 sample_submission.csv     # Template for Kaggle submission.
-├── 🚀 submission1.csv           # Submission from StandardScaler + SGDRegressor + GridSearchCV
-├── 🚀 submission2.csv           # Submission from XGBRegressor + GridSearchCV
-└── 📜 README.md                 # Project documentation.
-
----
+├── Task.ipynb                # Main notebook with the ML workflow
+├── train.csv                 # Training dataset
+├── test.csv                  # Test dataset
+├── sample_submission.csv     # Kaggle submission template
+├── submission1.csv           # SGDRegressor predictions
+├── submission2.csv           # XGBRegressor predictions
+└── README.md                 # Project documentation
+```
 
 ## 💻 Technologies Used
 
-- **Language**: Python 3.x  
-- **Environment**: Jupyter Notebook
+- **Language:** Python 3.x
+- **Environment:** Jupyter Notebook
+- **Platform:** Kaggle
 
 ## 📦 Libraries
 
-- `pandas`, `numpy` – Data manipulation and numerical operations  
-- `matplotlib`, `seaborn` – Data visualization  
-- `scikit-learn` – Preprocessing, pipelines, metrics
-- `models`  – LabelEncoder, StandardScaler, SGDRegressor, GridSearchCV
-- `xgboost` – Gradient boosting (`XGBRegressor`)
+- **pandas** — Data loading and manipulation
+- **NumPy** — Numerical computations
+- **Matplotlib & Seaborn** — Data visualization
+- **scikit-learn** — Data preprocessing, pipelines, model training, and hyperparameter tuning
+- **XGBoost** — Gradient boosting regression
 
----
+### Main Tools
+
+- `LabelEncoder` — Encoding categorical labels
+- `StandardScaler` — Feature standardization
+- `Pipeline` — Combining preprocessing and model training
+- `SGDRegressor` — Linear regression trained using stochastic gradient descent
+- `XGBRegressor` — Gradient boosting regression model
+- `GridSearchCV` — Hyperparameter tuning using cross-validation
 
 ## 📊 Dataset Description
 
-Competition: [Kaggle Playground Series S6E1](https://www.kaggle.com/competitions/playground-series-s6e1)
+The project uses the dataset provided by the [Kaggle Playground Series S6E1 competition](https://www.kaggle.com/competitions/playground-series-s6e1).
 
-- `train.csv`: Training data containing student attributes and the target column (`exam_score`).
-- `test.csv`: Test data containing student attributes without the target column.
-- `sample_submission.csv`: Required format for submitting predictions.
+- **`train.csv`** — Training data containing student features and the target variable, `exam_score`.
+- **`test.csv`** — Test data containing student features without the target variable.
+- **`sample_submission.csv`** — Template specifying the required submission format.
 
----
+## 🔁 Machine Learning Workflow
 
-## 🔁 Workflow Summary
+### 1. Data Loading and Preprocessing
 
-The solution implements a complete Machine Learning pipeline covering preprocessing, hyperparameter tuning, and final predictions:
+- Loaded the training and test datasets using pandas.
+- Identified and processed categorical features, including `gender`, `course`, `sleep_quality`, `internet_access`, `study_method`, `facility_rating`, and `exam_difficulty`.
+- Applied categorical encoding using `LabelEncoder`.
+- Removed the `id` column where appropriate.
+- Prepared the datasets for model training and prediction.
 
-### 1. 📥 Data Loading & Preprocessing
-- Loaded `train.csv` and `test.csv`.
-- Handled categorical features (`gender`, `course`, `sleep_quality`, `internet_access`, `study_method`, `facility_rating`, `exam_difficulty`) using `LabelEncoder`.
-- Dropped unnecessary identifier columns (`id`) where appropriate.
+### 2. Model Training and Hyperparameter Tuning
 
-### 2. 🧠 Modeling & Hyperparameter Tuning
+Two regression models were implemented and tuned using `GridSearchCV`.
 
-Two different regression models were built and optimized using `GridSearchCV` and Pipelines:
+| Model | Approach | Output File |
+|---|---|---|
+| `SGDRegressor` | `StandardScaler` + `Pipeline` + `GridSearchCV` | `submission1.csv` |
+| `XGBRegressor` | `Pipeline` + `GridSearchCV` | `submission2.csv` |
 
-| Model | Preprocessing / Method | Output File |
-| :--- | :--- | :--- |
-| `SGDRegressor` | StandardScaler + Pipeline + GridSearchCV | `submission1.csv` |
-| `XGBRegressor` | Pipeline + GridSearchCV (Optimized for RMSE) | `submission2.csv` |
+**SGDRegressor**
 
-### 3. 📤 Prediction & Submission
+A linear regression model trained using stochastic gradient descent. `StandardScaler` was used to standardize features, and `GridSearchCV` was applied to search for suitable hyperparameters.
 
-Final predictions generated by the tuned models were formatted and saved:
+**XGBRegressor**
 
-- `submission1.csv` → Predictions from tuned `SGDRegressor`
-- `submission2.csv` → Predictions from tuned `XGBRegressor`
+A gradient boosting regression model that builds an ensemble of decision trees to capture relationships between features and the target variable. `GridSearchCV` was used to tune model hyperparameters.
 
----
+### 3. Prediction and Submission
 
-## ⚙️ Installation & Usage
+After training and hyperparameter tuning, predictions were generated for the test dataset and saved as CSV files.
 
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+- **`submission1.csv`** — Predictions from the tuned `SGDRegressor`.
+- **`submission2.csv`** — Predictions from the tuned `XGBRegressor`.
+
+Both files are intended to follow the submission format required by Kaggle.
+
+## ⚙️ Installation and Usage
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/DavtianAnna/StudentTestScores.git
+cd StudentTestScores
+```
+
+### 2. Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
+
